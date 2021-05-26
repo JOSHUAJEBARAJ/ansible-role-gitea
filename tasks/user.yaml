@@ -1,0 +1,15 @@
+---
+   - name: Create git group 
+     group:
+      name: git 
+      state: present 
+   - name: Create a git user 
+     user:
+      name: git 
+      groups: 
+       - git 
+      state: present
+      shell: /bin/bash       
+      system: yes            
+      createhome: yes
+      home: /home/git   

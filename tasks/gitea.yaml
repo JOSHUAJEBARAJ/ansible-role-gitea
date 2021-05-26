@@ -1,0 +1,31 @@
+   - name: Download git tea
+     get_url:
+      url: https://dl.gitea.io/gitea/1.14.2/gitea-1.14.2-linux-amd64
+      dest: /usr/local/bin/gitea
+      mode: '0777' 
+   - name: Creating var directory  for git tea 
+     file:
+       path: "/var/lib/gitea/{{item}}"
+       state: directory
+       mode: 0750
+       group: git 
+       owner: git 
+       recurse: yes
+     loop:
+      - custom 
+      - data
+      - log 
+   - name: Creating etc directory for  git tea 
+     file:
+       path: /etc/gitea
+       state: directory
+       mode: 0770
+       owner: root 
+       group: git
+       recurse: yes
+   - name: Download  the Systemnd 
+     get_url:
+      url: https://raw.githubusercontent.com/go-gitea/gitea/master/contrib/systemd/gitea.service
+      dest: /etc/systemd/system/
+      mode: '0777'
+     notify: restart git 
